@@ -1,0 +1,96 @@
+make a constructor, getters and setters ##
+list of books  ##
+sort the list of books according to the release date ##
+set a list of authors from the list of books  ##
+find the books that have been translated to arabic ###
+find the book that contains the largest amount of arcs ###
+collect the books by authors  ###
+set of the all translation languages for every single book
+collect the books with release year 2020 ###
+
+
+
+        // sort the list of books according to the release date
+
+
+        List<Book> sortedList1 = books.stream()
+                .sorted(Comparator.comparing(Book::getReleaseDate))
+                .collect(Collectors.toList());
+
+
+
+        for (int i=0; i<sortedList1.size(); i++) {
+            System.out.println(sortedList1.get(i).getReleaseDate());
+        }
+
+
+
+
+
+
+
+    // set a list of authors from the list of books
+
+        List<String> listOfAuthors = new ArrayList<>();
+
+
+        books.forEach(book ->
+                listOfAuthors.add(book.getAuthor())
+        );
+
+
+        for (int i=0; i<listOfAuthors.size(); i++) {
+            System.out.println(listOfAuthors.get(i));
+        }
+
+
+    // find the books that have been translated to arabic'
+
+        List<Book> arabicLangBooks = books.stream()
+                .filter(book ->book.getTranslations().contains("arabic"))
+                .collect(Collectors.toList());
+
+        for (int i=0; i<arabicLangBooks.size(); i++) {
+            System.out.println(arabicLangBooks.get(i).getAuthor());
+        }
+
+
+
+    // find the book that contains the largest amount of arcs
+
+       List<Book> bigestBookList = books.stream()
+            .sorted(Comparator.comparing(Book::getPages))
+            .collect(Collectors.toList());
+
+        Book bigestBook = bigestBookList.get(bigestBookList.size()-1);
+        System.out.println(bigestBook.getPages());
+
+
+
+    // collect the books by authors
+
+        List<Object> booksByAuthor = books.stream()
+                .map(book ->book.getAuthor())
+                .collect(Collectors.toList());
+        for (int i=0; i<booksByAuthor.size(); i++) {
+            System.out.println(booksByAuthor.get(i));
+        }
+
+
+    // set of the all translation languages for every single book
+
+
+
+    // collect the books with release year 2020
+        Instant after2005 = LocalDate.parse("1990-01-01").atStartOfDay(ZoneId.of("Europe/Oslo")).toInstant();
+        List<Book> booksbyYear = books.stream()
+                .filter(book -> {
+                    return book.getReleaseDate().isAfter(after2005);
+        }
+                )
+                .collect(Collectors.toList());
+
+    for (int i=0;i<booksbyYear.size(); i++) {
+        System.out.println(booksbyYear.get(i).getReleaseDate());
+    }
+
